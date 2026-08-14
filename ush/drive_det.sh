@@ -32,6 +32,14 @@ ln -snf ${PYDAMONITOR}/scripts/costgrad_descent.py .
 ln -snf ${PYDAMONITOR}/scripts/obs_count_timeseries.py .
 ./obs_count_timeseries.py ${CDATE} 10  # plot 10 days of obs counts
 #
+# prep for data impact
+ln -snf ${PYDAMONITOR}/scripts/data_impact_sate.py .
+ln -snf ${PYDAMONITOR}/scripts/data_impact_functions.py .
+./data_impact_sate.py ${CDATE} 
+
+ln -snf ${PYDAMONITOR}/ush/prep_data_impact_det.sh .
+./prep_data_impact_det.sh
+# 
 # prep files for web
 ln -snf ${PYDAMONITOR}/ush/prep_web_det.sh .
 ./prep_web_det.sh
