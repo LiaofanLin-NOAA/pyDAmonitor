@@ -8,8 +8,6 @@ Data Impact Analysis – JEDI Conventional Observations
 
 import sys
 import os
-from datetime import datetime
-
 import numpy as np
 import netCDF4 as nc
 
@@ -19,10 +17,7 @@ from data_impact_functions import (
 )
 
 
-
 def analyze_conv(CDATE):
-
-    dateEnd = datetime.strptime(CDATE, "%Y%m%d%H")
 
     # ------------------------------------------------------------
     # Choose conventional observation types
@@ -199,7 +194,11 @@ def analyze_conv(CDATE):
             np.nan
         )
 
-        jo_diff[valid] = ( oma[valid] ** 2  - omb[valid] ** 2) / ( obserr[valid] ** 2 )
+        jo_diff[valid] = (
+            oma[valid] ** 2 - omb[valid] ** 2
+        ) / (
+            obserr[valid] ** 2
+        )
 
         jo_diffs = jo_diff[valid]
 
