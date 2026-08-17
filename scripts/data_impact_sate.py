@@ -23,7 +23,14 @@ def analyze_sate(CDATE):
     # ------------------------------------------------------------
     # Choose sensors: comment/uncomment as needed
     # ------------------------------------------------------------
-    sensor_types = ['cris-fsr_n20']
+    sensor_types = [
+        "atms_n20",
+        "abi_g16",
+        "abi_g18",
+        "atms_n21",
+        "cris-fsr_n20",
+        "cris-fsr_n21"
+    ]
     
     n_sensor = len(sensor_types)
     final_total_size = np.zeros(n_sensor)
