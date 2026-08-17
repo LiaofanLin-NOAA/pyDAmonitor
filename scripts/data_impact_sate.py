@@ -3,12 +3,7 @@
 #
 import sys
 import os
-from datetime import datetime, timedelta
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import pickle
 import netCDF4 as nc
 
 
@@ -17,8 +12,8 @@ from data_impact_functions import (
     save_legacy_pickle
 )
 
+
 def analyze_sate(CDATE):
-    dateEnd = datetime.strptime(CDATE, "%Y%m%d%H")
 
     # ------------------------------------------------------------
     # Choose sensors: comment/uncomment as needed
@@ -31,45 +26,44 @@ def analyze_sate(CDATE):
         "cris-fsr_n20",
         "cris-fsr_n21"
     ]
-    
+
     n_sensor = len(sensor_types)
     final_total_size = np.zeros(n_sensor)
     final_assim_size = np.zeros(n_sensor)
     final_mean_jo_diff = np.zeros(n_sensor)
     final_sum_jo_diff = np.zeros(n_sensor)
     final_max_abs_jo_diff = np.zeros(n_sensor)
-    
-    
-    for ss, sensor in enumerate(sensor_types):  
- 
+
+    for ss, sensor in enumerate(sensor_types):
+
         print(ss)
         print(sensor)
-        
+
         ncd = nc.Dataset(f"./jdiag_{sensor}.nc", 'r')
-        
+
         print(f"=== Processing {sensor} ===")
-        
+
         # NetCDF global attributes
         # --------------------------
         nc_attrs = ncd.ncattrs()
         print('NetCDF Global Attributes: ')
         print('nc_attrs = ', nc_attrs)
-        
+
         for nc_attr in nc_attrs:
             print('nc_attr', ncd.getncattr(nc_attr))
-    
+
         omb = ncd.groups["ombg"].variables["brightnessTemperature"][:]
-        oma = ncd.groups["oman"].variables["brightnessTemperature"][:]    
+        oma = ncd.groups["oman"].variables["brightnessTemperature"][:]
         obserr = ncd.groups["EffectiveError0"].variables["brightnessTemperature"][:]
         qc = ncd.groups["EffectiveQC0"].variables["brightnessTemperature"][:]
-                
+
         channel = ncd.variables["Channel"][:]
 
         print(f"OMB shape:    {omb.shape}")
         print(f"OMA shape:    {oma.shape}")
         print(f"ObsErr shape: {obserr.shape}")
         print(f"QC shape:     {qc.shape}")
-            
+
         # ----------------------------------------------------
         # Convert masked arrays to regular arrays with NaN
         # ----------------------------------------------------
@@ -105,7 +99,7 @@ def analyze_sate(CDATE):
         # ----------------------------------------------------
         jo_diff = np.full(omb.shape, np.nan)
 
-        jo_diff[valid] = ( oma[valid] ** 2 - omb[valid] ** 2) / ( obserr[valid] ** 2)
+        jo_diff[valid] = (oma[valid] ** 2 - omb[valid] ** 2) / (obserr[valid] ** 2)
 
         jo_diffs = jo_diff[valid]
 
@@ -135,8 +129,7 @@ def analyze_sate(CDATE):
         print(f"Mean Jo-diff:    {mean_jo_diff}")
         print(f"Sum Jo-diff:     {sum_jo_diff}")
         print(f"Max |Jo-diff|:   {max_abs_jo_diff}")
-            
-            
+
         # ----------------------------------------------------
         # Save summary arrays
         # ----------------------------------------------------
@@ -194,7 +187,7 @@ def analyze_sate(CDATE):
             final_max_abs_jo_diff,
             CDATE,
             label="sate"
-        )    
+        )
 
     # ------------------------------------------------------------
     # Final sensor summary
@@ -216,8 +209,6 @@ def analyze_sate(CDATE):
         )
 
 
-            
-            
 if __name__ == "__main__":
     #
     args = sys.argv
@@ -225,8 +216,8 @@ if __name__ == "__main__":
     if nargs < 1 or len(sys.argv[1]) < 10:
         print(f'Usage: {os.path.basename(sys.argv[0])} <YYYYMMDDHH>')
         sys.exit(1)
-        
+
     # ~~~~~~
     CDATE = sys.argv[1]
-            
+
     analyze_sate(CDATE)
