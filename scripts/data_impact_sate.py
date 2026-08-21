@@ -121,9 +121,14 @@ def analyze_sate(CDATE):
         # ----------------------------------------------------
         # Statistics
         # ----------------------------------------------------
-        mean_jo_diff = np.mean(jo_diffs)
-        sum_jo_diff = np.sum(jo_diffs)
-        max_abs_jo_diff = np.max(np.abs(jo_diffs))
+if jo_diffs.size:
+            mean_jo_diff = np.mean(jo_diffs)
+            sum_jo_diff = np.sum(jo_diffs)
+            max_abs_jo_diff = np.max(np.abs(jo_diffs))
+        else:
+            mean_jo_diff = np.nan
+            sum_jo_diff = 0.0
+            max_abs_jo_diff = np.nan
 
         print()
         print(f"Mean Jo-diff:    {mean_jo_diff}")
