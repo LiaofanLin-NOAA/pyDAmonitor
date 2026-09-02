@@ -82,14 +82,14 @@ def analyze_conv(CDATE):
         #
         #   ombg/airTemperature
         #   oman/airTemperature
-        #   EffectiveError0/airTemperature
-        #   EffectiveQC0/airTemperature
+        #   EffectiveError1/airTemperature
+        #   EffectiveQC1/airTemperature
         # --------------------------------------------------------
         common_variables = (
             set(ncd.groups["ombg"].variables.keys())
             & set(ncd.groups["oman"].variables.keys())
-            & set(ncd.groups["EffectiveError0"].variables.keys())
-            & set(ncd.groups["EffectiveQC0"].variables.keys())
+            & set(ncd.groups["EffectiveError1"].variables.keys())
+            & set(ncd.groups["EffectiveQC1"].variables.keys())
         )
 
         common_variables = sorted(common_variables)
@@ -132,12 +132,12 @@ def analyze_conv(CDATE):
         )
 
         obserr = (
-            ncd.groups["EffectiveError0"]
+            ncd.groups["EffectiveError1"]
             .variables[variable][:]
         )
 
         qc = (
-            ncd.groups["EffectiveQC0"]
+            ncd.groups["EffectiveQC1"]
             .variables[variable][:]
         )
 
