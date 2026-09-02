@@ -54,8 +54,8 @@ def analyze_sate(CDATE):
 
         omb = ncd.groups["ombg"].variables["brightnessTemperature"][:]
         oma = ncd.groups["oman"].variables["brightnessTemperature"][:]
-        obserr = ncd.groups["EffectiveError0"].variables["brightnessTemperature"][:]
-        qc = ncd.groups["EffectiveQC0"].variables["brightnessTemperature"][:]
+        obserr = ncd.groups["EffectiveError1"].variables["brightnessTemperature"][:]
+        qc = ncd.groups["EffectiveQC1"].variables["brightnessTemperature"][:]
 
         channel = ncd.variables["Channel"][:]
 
