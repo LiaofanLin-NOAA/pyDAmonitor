@@ -92,18 +92,18 @@ def plot_jo_histogram(
         (obserr > 0)
     )
 
-    inv_obs_error = 1.0 / obserr[valid_obserr]
+    obserr_valid = obserr[valid_obserr]
 
     text = (
-        f"Total Obs Size = {count_total}\n"
-        f"Assim Obs Size = {count_assim}\n"
+        f"Total Obs Count = {count_total}\n"
+        f"Assim Obs Count = {count_assim}\n"
         f"Mean Jo-diff = {mean_jo:.4f}\n"
         f"Sum Jo-diff = {sum_jo:.4f}\n"
         f"Max Abs Jo-diff = {max_abs_jo:.4f}\n"
         f"|Jo-diff| > 25 = {count_large}\n"
         f"Jo-diff = 0 = {count_zero}\n"
-        f"Mean Inv ObsErr = {np.mean(inv_obs_error):.4f}\n"
-        f"STD Inv ObsErr = {np.std(inv_obs_error):.4f}"
+        f"Mean ObsErr = {np.mean(obserr_valid):.4f}\n"
+        f"STD ObsErr = {np.std(obserr_valid):.4f}"
     )
 
     ax.text(
